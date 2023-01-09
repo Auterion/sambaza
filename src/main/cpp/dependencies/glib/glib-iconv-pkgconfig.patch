@@ -1,0 +1,13 @@
+diff --git a/meson.build b/meson.build
+index 43bb468..f37b535 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2048,7 +2048,7 @@ if host_system == 'windows'
+   # any external library for it
+   libiconv = []
+ else
+-  libiconv = dependency('iconv')
++  libiconv = dependency('my-iconv', 'iconv')
+ endif
+ 
+ pcre2 = dependency('libpcre2-8', version: '>= 10.32', required : false)

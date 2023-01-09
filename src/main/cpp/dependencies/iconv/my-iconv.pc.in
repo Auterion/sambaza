@@ -1,0 +1,11 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: iconv
+Description: libiconv
+Version: @ICONV_VERSION@
+URL: https://www.gnu.org/software/libiconv/
+Libs: -L${libdir} -liconv
+Cflags: -I${includedir}

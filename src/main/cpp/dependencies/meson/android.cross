@@ -1,0 +1,25 @@
+[constants]
+cross_triple = 'aarch64-linux-android'
+cross_root = '/usr/' + cross_triple
+
+[properties]
+pkg_config_libdir = ''
+
+[binaries]
+c = cross_root + '/bin/clang'
+cpp = cross_root + '/bin/clang++'
+ar = cross_root + '/bin/llvm-ar'
+as = cross_root + '/bin/llvm-as'
+ranlib = cross_root + '/bin/llvm-ranlib'
+ld = cross_root + '/bin/ld'
+strip = cross_root + '/bin/llvm-strip'
+pkgconfig = 'pkg-config'
+
+# This is hardcoded for Dockcross. Ideally glib2 would be installed on the system, though.
+glib-mkenums = '/work/build/android-arm64/install/bin/glib-mkenums'
+
+[host_machine]
+system = 'android'
+cpu_family = 'aarch64'
+cpu = 'aarch64'
+endian = 'little'

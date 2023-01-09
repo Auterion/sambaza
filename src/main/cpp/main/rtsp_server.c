@@ -1,6 +1,7 @@
-#include <stdlib.h>
 #include <gst/gst.h>
 #include <gst/rtsp-server/rtsp-server.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "rtsp_server.h"
 
