@@ -15,8 +15,9 @@ ld = cross_root + '/bin/ld'
 strip = cross_root + '/bin/llvm-strip'
 pkgconfig = 'pkg-config'
 
-# This is hardcoded for Dockcross. Ideally glib2 would be installed on the system, though.
-glib-mkenums = '/work/build/android-x86/install/bin/glib-mkenums'
+# This is hardcoded for Dockcross.
+# Ideally glib2 would be installed on the system, though.
+glib-mkenums = '/work/build/dependencies/android-x86/install/bin/glib-mkenums'
 
 [host_machine]
 system = 'android'

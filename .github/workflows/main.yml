@@ -1,0 +1,77 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+    - 'main'
+    tags:
+    - '*'
+  pull_request:
+    branches:
+    - '*'
+
+jobs:
+  ubuntu:
+    name: ubuntu
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: src/main/cpp
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: src/main/cpp/build/dependencies/install
+          key: ${{ github.job }}-ubuntu20-${{ hashFiles('./src/main/cpp/dependencies/**') }}
+      - name: install build tools
+        run: |
+            sudo pip install meson
+            sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: build and install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/main/cpp/build/dependencies/install -DCMAKE_INSTALL_PREFIX=build/dependencies/install -Bbuild/dependencies -Sdependencies
+          cmake --build build/dependencies
+      - name: build main project
+        run: |
+          cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/main/cpp/build/dependencies/install -Bbuild/main -Smain
+          cmake --build build/main
+
+  android:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: src/main/cpp
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: android-arm
+            arch: armeabi-v7a
+          - name: android-arm64
+            arch: arm64-v8a
+          - name: android-x86
+            arch: x86
+          - name: android-x86_64
+            arch: x86_64
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup dockcross
+        run: docker run --rm dockcross/${{ matrix.name }} > ./dockcross-${{ matrix.name }}; chmod +x ./dockcross-${{ matrix.name }}
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: src/main/cpp/build/dependencies/${{ matrix.name }}/install
+          key: ${{ github.job }}-${{ matrix.name }}-${{ hashFiles('./src/main/cpp/dependencies/**') }}
+      - name: cross-compile and install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=/work/build/dependencies/${{ matrix.name }}/install -DCMAKE_INSTALL_PREFIX=build/dependencies/${{ matrix.name }}/install -Bbuild/dependencies/android -Sdependencies
+          ./dockcross-${{ matrix.name }} cmake --build build/dependencies/android
+      - name: cross-compile main project
+        run: |
+          ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=/work/build/dependencies/${{ matrix.name }}/install -Bbuild/main -Smain
+          ./dockcross-${{ matrix.name }} cmake --build build/main
+
