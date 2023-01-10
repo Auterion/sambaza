@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(riddleman C)
+project(sambaza C)
 
 if (MSVC)
     add_compile_options(/WX /W2)
@@ -35,7 +35,7 @@ pkg_check_modules(GST REQUIRED #gstreamer-full-1.0
     orc-0.4
 )
 
-add_library(riddleman SHARED
+add_library(sambaza SHARED
         appsink_proxy.c
         appsrc_factory.c
         gstbuffer_to_sink.c
@@ -47,17 +47,17 @@ add_library(riddleman SHARED
 #message(WARNING "GST_LINK_LIBRARIES: ${GST_LINK_LIBRARIES}")
 #message(FATAL_ERROR "GST_INCLUDE_DIRS: ${GST_INCLUDE_DIRS}")
 
-target_include_directories(riddleman SYSTEM PRIVATE
+target_include_directories(sambaza SYSTEM PRIVATE
         ${JNI_INCLUDE_DIRS}
         ${GST_INCLUDE_DIRS}
 )
 
-target_link_libraries(riddleman
+target_link_libraries(sambaza
         ${JNI_LIBRARIES}
         ${GST_LINK_LIBRARIES}
 )
 
-#target_link_libraries(riddleman
+#target_link_libraries(sambaza
 ##        gstrtsp
 ##        gstrtp
 ##        gstvideo-1.0

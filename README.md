@@ -1,2 +1,2 @@
-# riddleman
-RTSP middleman (a.k.a proxy)
+# Sambaza
+RTSP proxy
