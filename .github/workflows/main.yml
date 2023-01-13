@@ -16,14 +16,14 @@ jobs:
     runs-on: ubuntu-20.04
     defaults:
       run:
-        working-directory: src/main/cpp
+        working-directory: src
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
         id: cache
         with:
-          path: src/main/cpp/build/dependencies/install
-          key: ${{ github.job }}-ubuntu20-${{ hashFiles('./src/main/cpp/dependencies/**') }}
+          path: src/build/dependencies/install
+          key: ${{ github.job }}-ubuntu20-${{ hashFiles('./src/dependencies/**') }}
       - name: install build tools
         run: |
             sudo pip install meson
@@ -31,11 +31,11 @@ jobs:
       - name: build and install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/main/cpp/build/dependencies/install -DCMAKE_INSTALL_PREFIX=build/dependencies/install -Bbuild/dependencies -Sdependencies
+          cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/build/dependencies/install -DCMAKE_INSTALL_PREFIX=build/dependencies/install -Bbuild/dependencies -Sdependencies
           cmake --build build/dependencies
       - name: build main project
         run: |
-          cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/main/cpp/build/dependencies/install -Bbuild/main -Smain
+          cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/build/dependencies/install -Bbuild/main -Smain
           cmake --build build/main
 
   android:
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-20.04
     defaults:
       run:
-        working-directory: src/main/cpp
+        working-directory: src
     strategy:
       fail-fast: false
       matrix:
@@ -63,8 +63,8 @@ jobs:
       - uses: actions/cache@v3
         id: cache
         with:
-          path: src/main/cpp/build/dependencies/${{ matrix.name }}/install
-          key: ${{ github.job }}-${{ matrix.name }}-${{ hashFiles('./src/main/cpp/dependencies/**') }}
+          path: src/build/dependencies/${{ matrix.name }}/install
+          key: ${{ github.job }}-${{ matrix.name }}-${{ hashFiles('./src/dependencies/**') }}
       - name: cross-compile and install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
