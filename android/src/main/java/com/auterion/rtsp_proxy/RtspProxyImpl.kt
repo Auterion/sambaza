@@ -15,8 +15,8 @@ abstract class RtspProxyImpl(port: Int = 0) : RtspProxy, CoroutineScope {
     private var videoStreamFlowCollectJob: Job? = null
 
     init {
-        println("Loading librtsp_proxy.so")
-        System.loadLibrary("rtsp_proxy")
+        println("Loading libsambaza.so")
+        System.loadLibrary("sambaza")
     }
 
     protected val skywayServerHandle: Long = JniApi.createRtspServer(port)

@@ -49,13 +49,6 @@ allprojects {
             jvmTarget = '11'
         }
 
-        externalNativeBuild {
-            cmake {
-                path "src/main/cpp/CMakeLists.txt"
-                version "3.22.1"
-            }
-        }
-
         testOptions {
             unitTests.all {
                 testLogging {
@@ -76,3 +69,4 @@ allprojects {
         testImplementation 'junit:junit:4.13.2'
     }
 }
+

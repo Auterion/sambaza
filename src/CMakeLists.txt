@@ -16,7 +16,7 @@ list(APPEND CMAKE_ARGS
 
 ExternalProject_Add(
     main
-    URL main
+    URL "${CMAKE_CURRENT_SOURCE_DIR}/main"
     PREFIX main
     CMAKE_ARGS "${CMAKE_ARGS}"
     INSTALL_COMMAND ""
