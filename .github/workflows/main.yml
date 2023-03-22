@@ -104,6 +104,26 @@ jobs:
         with:
           name: x86_64
           path: android/src/main/jniLibs/x86_64/
+      - name: configure keystore
+        run: |
+            echo "${{ secrets.JKS }}" > keystore.jks.b64
+            base64 -d -i keystore.jks.b64 > /tmp/keystore.jks
       - name: build
-        run: ./gradlew build
+        run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file="/tmp/keystore.jks" -Pandroid.injected.signing.store.password="${{ secrets.STORE_PASSWORD }}" -Pandroid.injected.signing.key.alias="${{ secrets.KEY_ALIAS }}" -Pandroid.injected.signing.key.password="${{ secrets.KEY_PASSWORD }}"
+      - name: save artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: "sambaza-${{ github.head_ref }}.aar"
+          path: ./android/build/outputs/aar/sambaza-release.aar
+          retention-days: 14
+      - name: upload aar
+        if: github.event_name == 'release' && github.event.action == 'created'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: './android/build/outputs/aar/sambaza-release.aar'
+          asset_name: "sambaza-${{ github.ref_name }}.aar"
+          tag: ${{ github.ref }}
+          overwrite: true
 
