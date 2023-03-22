@@ -12,7 +12,7 @@ on:
 
 jobs:
   ubuntu:
-    name: ubuntu
+    name: libsambaza.so (ubuntu)
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -38,8 +38,8 @@ jobs:
           cmake -DCMAKE_PREFIX_PATH=${{ github.workspace }}/src/build/dependencies/install -Bbuild/main -Smain
           cmake --build build/main
 
-  android:
-    name: ${{ matrix.name }}
+  android-c:
+    name: libsambaza.so (${{ matrix.name }})
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -74,4 +74,36 @@ jobs:
         run: |
           ./dockcross-${{ matrix.name }} cmake -DCMAKE_PREFIX_PATH=/work/build/dependencies/${{ matrix.name }}/install -Bbuild/main -Smain
           ./dockcross-${{ matrix.name }} cmake --build build/main
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.arch }}
+          path: src/build/main/libsambaza.so
+
+  android-aar:
+    name: android
+    needs: android-c
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: armeabi-v7a
+          path: android/src/main/jniLibs/armeabi-v7a/
+      - uses: actions/download-artifact@v3
+        with:
+          name: arm64-v8a
+          path: android/src/main/jniLibs/arm64-v8a/
+      - uses: actions/download-artifact@v3
+        with:
+          name: x86
+          path: android/src/main/jniLibs/x86/
+      - uses: actions/download-artifact@v3
+        with:
+          name: x86_64
+          path: android/src/main/jniLibs/x86_64/
+      - name: build
+        run: ./gradlew build
 
