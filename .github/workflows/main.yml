@@ -118,7 +118,7 @@ jobs:
           path: ./android/build/outputs/aar/sambaza-release.aar
           retention-days: 14
       - name: upload aar
-        if: github.event_name == 'release' && github.event.action == 'created'
+        if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
