@@ -104,6 +104,10 @@ jobs:
         with:
           name: x86_64
           path: android/src/main/jniLibs/x86_64/
+      - name: blah
+        run: echo ${{ github.event_name }}
+      - name: blah2
+        run: echo ${{ github.event.action }}
       - name: configure keystore
         run: |
             echo "${{ secrets.JKS }}" > keystore.jks.b64
