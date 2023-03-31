@@ -80,3 +80,29 @@ allprojects {
         testImplementation 'junit:junit:4.13.2'
     }
 }
+
+if (project.hasProperty('SKYWAY_RELEASE_STORE_FILE')) {
+    tasks.whenTaskAdded { task ->
+        if (task.name == 'assembleRelease') {
+            def aarPath = "${project.buildDir}/outputs/aar/sambaza-release.aar"
+
+            task.doLast {
+                ant.signjar(
+                        alias: android.signingConfigs.release.keyAlias,
+                        jar: aarPath,
+                        keystore: android.signingConfigs.release.storeFile,
+                        storepass: android.signingConfigs.release.storePassword,
+                        keypass: android.signingConfigs.release.keyPassword,
+                        preservelastmodified: 'true')
+
+                ant.verifyjar(
+                        alias: android.signingConfigs.release.keyAlias,
+                        jar: aarPath,
+                        keystore: android.signingConfigs.release.storeFile,
+                        storepass: android.signingConfigs.release.storePassword,
+                        keypass: android.signingConfigs.release.keyPassword)
+            }
+        }
+    }
+}
+

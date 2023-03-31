@@ -109,7 +109,7 @@ jobs:
             echo "${{ secrets.JKS }}" > keystore.jks.b64
             base64 -d -i keystore.jks.b64 > /tmp/keystore.jks
       - name: build
-        run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file="/tmp/keystore.jks" -Pandroid.injected.signing.store.password="${{ secrets.STORE_PASSWORD }}" -Pandroid.injected.signing.key.alias="${{ secrets.KEY_ALIAS }}" -Pandroid.injected.signing.key.password="${{ secrets.KEY_PASSWORD }}"
+        run: ./gradlew assembleRelease -PSKYWAY_RELEASE_STORE_FILE="/tmp/keystore.jks" -PSKYWAY_RELEASE_STORE_PASSWORD="${{ secrets.STORE_PASSWORD }}" -PSKYWAY_RELEASE_KEY_ALIAS="${{ secrets.KEY_ALIAS }}" -PSKYWAY_RELEASE_KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}"
       - name: save artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v3
