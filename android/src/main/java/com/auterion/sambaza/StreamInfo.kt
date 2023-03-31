@@ -1,4 +1,4 @@
-package com.auterion.rtsp_proxy
+package com.auterion.sambaza
 
 data class StreamInfo(
     val id: Int, // e.g. 1

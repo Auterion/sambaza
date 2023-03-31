@@ -1,4 +1,4 @@
-package com.auterion.rtsp_proxy
+package com.auterion.sambaza
 
 internal class JniApi {
     companion object {

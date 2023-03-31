@@ -1,4 +1,4 @@
-package com.auterion.rtsp_proxy
+package com.auterion.sambaza
 
 class H264Frame(val pts: ULong, val caps: String?) {
     private var buffer = ByteArray(0)
