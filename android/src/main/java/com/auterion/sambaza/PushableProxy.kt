@@ -1,4 +1,4 @@
-package com.auterion.rtsp_proxy
+package com.auterion.sambaza
 
 interface PushableProxy : RtspProxy {
     fun pushFrame(frame: H264Frame)

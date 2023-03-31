@@ -1,4 +1,4 @@
-package com.auterion.rtsp_proxy
+package com.auterion.sambaza
 
 class PushableProxyImpl(port: Int = 0) :
     RtspProxyImpl(port), PushableProxy {
