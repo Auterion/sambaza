@@ -13,6 +13,7 @@ buildscript {
 allprojects {
     apply plugin: 'com.android.library'
     apply plugin: 'kotlin-android'
+    apply plugin: 'maven-publish'
 
     repositories {
         google()
@@ -38,9 +39,10 @@ allprojects {
             minSdkVersion 16
             targetSdkVersion 33
 
+            archivesBaseName = 'sambaza'
             group = 'com.auterion'
             versionCode 1
-            versionName "1.0"
+            version "1.0.0"
 
             ndk {
                 abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
@@ -79,11 +81,62 @@ allprojects {
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
         testImplementation 'junit:junit:4.13.2'
     }
+
+    if (project.hasProperty('ossrhUsername')
+            && project.hasProperty('ossrhPassword')) {
+        afterEvaluate {
+            publishing {
+                publications {
+                    release(MavenPublication) {
+                        from components.release
+
+                        pom {
+                            name = 'Sambaza'
+                            packaging = 'aar'
+                            description = 'RTSP proxy'
+                            url = 'https://github.com/auterion/sambaza'
+
+                            scm {
+                                connection = 'scm:git:https://github.com/auterion/sambaza'
+                                developerConnection = 'scm:git:https://github.com/jonasvautherin'
+                                url = 'https://github.com/auterion/sambaza'
+                            }
+
+                            licenses {
+                                license {
+                                    name = 'GNU General Public License v2.0 or later'
+                                    url = 'https://spdx.org/licenses/GPL-2.0-or-later.html'
+                                }
+                            }
+
+                            developers {
+                                developer {
+                                    id = 'jonasvautherin'
+                                    name = 'Jonas Vautherin'
+                                    email = 'jonas.vautherin@gmail.com'
+                                }
+                            }
+                        }
+                    }
+                }
+                repositories {
+                    maven {
+                        url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+                        credentials {
+                            username = ossrhUsername
+                            password = ossrhPassword
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 if (project.hasProperty('SKYWAY_RELEASE_STORE_FILE')) {
     tasks.whenTaskAdded { task ->
-        if (task.name == 'assembleRelease') {
+        if (task.name == 'assembleRelease' || task.name == 'bundleReleaseAar') {
             def aarPath = "${project.buildDir}/outputs/aar/sambaza-release.aar"
 
             task.doLast {
