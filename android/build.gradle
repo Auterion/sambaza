@@ -14,6 +14,7 @@ allprojects {
     apply plugin: 'com.android.library'
     apply plugin: 'kotlin-android'
     apply plugin: 'maven-publish'
+    apply plugin: 'signing'
 
     repositories {
         google()
@@ -129,6 +130,11 @@ allprojects {
                         }
                     }
                 }
+            }
+
+            signing {
+                useGpgCmd()
+                sign publishing.publications.release
             }
         }
     }
