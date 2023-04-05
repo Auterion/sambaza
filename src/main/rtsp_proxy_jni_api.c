@@ -29,7 +29,7 @@ typedef struct _SkywayHandles {
 } SkywayHandles;
 
 JNIEXPORT jlong JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_initNative(__attribute__ ((unused)) JNIEnv *env,
+Java_com_auterion_sambaza_JniApi_00024Companion_initNative(__attribute__ ((unused)) JNIEnv *env,
                                                                __attribute__ ((unused)) jobject thiz) {
     gst_debug_set_default_threshold(GST_LEVEL_NONE);
 
@@ -56,7 +56,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_initNative(__attribute__ ((u
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_runMainLoopNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_runMainLoopNative(
         __attribute__ ((unused)) JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong main_loop_handle) {
@@ -68,7 +68,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_runMainLoopNative(
 }
 
 JNIEXPORT jlong JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_createRtspServerNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_createRtspServerNative(
         __attribute__ ((unused)) JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jint port) {
@@ -77,7 +77,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_createRtspServerNative(
 }
 
 JNIEXPORT jint JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_getPortNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_getPortNative(
         __attribute__ ((unused)) JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong skyway_server_handle) {
@@ -86,7 +86,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_getPortNative(
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_startNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_startNative(
         __attribute__ ((unused)) JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong skyway_server_handle,
@@ -99,7 +99,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_startNative(
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_stopNative(__attribute__ ((unused)) JNIEnv *env,
+Java_com_auterion_sambaza_JniApi_00024Companion_stopNative(__attribute__ ((unused)) JNIEnv *env,
                                                                __attribute__ ((unused)) jobject thiz,
                                                                jlong skyway_server_handle,
                                                                jlong main_loop_handle) {
@@ -117,7 +117,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_stopNative(__attribute__ ((u
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_addRtspSrcStreamNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_addRtspSrcStreamNative(
         JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong skyway_server_handle,
@@ -135,7 +135,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_addRtspSrcStreamNative(
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_addPushableStreamNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_addPushableStreamNative(
         JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong skyway_server_handle,
@@ -150,7 +150,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_addPushableStreamNative(
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_removeStreamNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_removeStreamNative(
         JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong skyway_server_handle,
@@ -162,7 +162,7 @@ Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_removeStreamNative(
 }
 
 JNIEXPORT void JNICALL
-Java_com_auterion_rtsp_1proxy_JniApi_00024Companion_pushFrameNative(
+Java_com_auterion_sambaza_JniApi_00024Companion_pushFrameNative(
         JNIEnv *env,
         __attribute__ ((unused)) jobject thiz,
         jlong skyway_server_handle,
