@@ -13,7 +13,7 @@ on:
 jobs:
   ubuntu:
     name: libsambaza.so (ubuntu)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: src
@@ -40,7 +40,7 @@ jobs:
 
   android-c:
     name: libsambaza.so (${{ matrix.name }})
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: src
@@ -82,7 +82,7 @@ jobs:
   android-aar:
     name: android
     needs: android-c
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: android
@@ -131,4 +131,13 @@ jobs:
         run: |
             echo -n "${{ secrets.MAVEN_SIGNING_KEY }}" | base64 --decode | gpg --import
             ./gradlew -PSKYWAY_RELEASE_STORE_FILE="/tmp/keystore.jks" -PSKYWAY_RELEASE_STORE_PASSWORD="${{ secrets.STORE_PASSWORD }}" -PSKYWAY_RELEASE_KEY_ALIAS="${{ secrets.KEY_ALIAS }}" -PSKYWAY_RELEASE_KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}" -PossrhUsername="${{ secrets.OSSRH_USERNAME }}" -PossrhPassword="${{ secrets.OSSRH_PASSWORD }}" -Psigning.gnupg.keyName="${{ secrets.MAVEN_KEYID}}" publish
+
+  android_test:
+    name: Run Kotlin tests
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        working-directory: android
+        run: ./gradlew test
 
