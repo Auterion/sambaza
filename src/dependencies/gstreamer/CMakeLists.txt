@@ -51,7 +51,7 @@ endif()
 
 ExternalProject_Add(
     gstreamer
-    URL "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.22.1/gstreamer-1.22.1.tar.gz"
+    URL "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.22.6/gstreamer-1.22.6.tar.gz"
     PREFIX gstreamer
     CONFIGURE_COMMAND meson setup --pkg-config-path=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig ${CROSS_FILE_OPT} ${CROSS_FILE} --buildtype=${BUILD_TYPE} --prefix=${CMAKE_INSTALL_PREFIX} --libdir=lib -Ddefault_library=${LIBRARY_TYPE} -Dpython=disabled -Dqt5=disabled -Dges=disabled -Dnls=disabled -Dgst-examples=disabled -Dexamples=disabled -Dtests=disabled -Ddoc=disabled -Dgtk_doc=disabled -Dorc:benchmarks=disabled -Dorc:examples=disabled -Dorc:gtk_doc=disabled -Dorc:tests=disabled -Dorc:tools=disabled -Dorc:orc-test=disabled -Dgst-plugins-bad:fdkaac=disabled -Dpixman:a64-neon=${ENABLE_NEON_64} -Dpixman:neon=${ENABLE_NEON} -Dpixman:arm-simd=${ENABLE_SIMD} -DFFmpeg:asm=${ENABLE_ASM} -Ddv:asm=${ENABLE_ASM} -Dcairo:werror=disabled <SOURCE_DIR>/build <SOURCE_DIR>
     BUILD_COMMAND meson compile -C <SOURCE_DIR>/build
