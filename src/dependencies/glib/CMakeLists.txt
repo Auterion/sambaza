@@ -38,7 +38,7 @@ endif()
 
 ExternalProject_Add(
     glib
-    URL "https://download.gnome.org/sources/glib/2.74/glib-2.74.1.tar.xz"
+    URL "https://download.gnome.org/sources/glib/2.76/glib-2.76.4.tar.xz"
     PREFIX glib
     PATCH_COMMAND patch < ${PROJECT_SOURCE_DIR}/glib-iconv-pkgconfig.patch
     CONFIGURE_COMMAND meson setup --pkg-config-path=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig ${CROSS_FILE_OPT} ${CROSS_FILE} --buildtype=${BUILD_TYPE} --prefix=${CMAKE_INSTALL_PREFIX} --libdir=lib -Ddefault_library=${LIBRARY_TYPE} -Dc_args="-Wno-pointer-sign" <SOURCE_DIR>/build <SOURCE_DIR>
