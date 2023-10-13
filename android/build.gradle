@@ -42,8 +42,8 @@ allprojects {
 
             archivesBaseName = 'sambaza'
             group = 'com.auterion'
-            versionCode 3
-            version "1.0.2"
+            versionCode 4
+            version "1.0.3"
 
             ndk {
                 abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
@@ -105,8 +105,8 @@ allprojects {
 
                             licenses {
                                 license {
-                                    name = 'GNU General Public License v2.0 or later'
-                                    url = 'https://spdx.org/licenses/GPL-2.0-or-later.html'
+                                    name = 'GNU Lesser General Public License v2.1 only'
+                                    url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html'
                                 }
                             }
 
